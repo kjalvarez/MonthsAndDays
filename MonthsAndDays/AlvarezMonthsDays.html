@@ -1,0 +1,83 @@
+<!--Karin Alvarez, Intro to Javascript 31760, karin.j.alvarez@gmail.com -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">  
+<body>
+
+	<p>This page will create a listing of the days and dates for a specified month in the current year.</p>
+	<script type="text/javascript">
+
+	//Variable declarations
+	var reqMon;
+	var todaysDate;
+	var currYr;
+	var currMon;
+	var currDate;
+	var currDay;
+	var firstDay;
+	var firstDayofWeek;
+	var weekIncrement;
+	var dayIncrement;
+
+	//Creating arrays
+	var monthArray = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+	var weekDaysArray = new Array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+	
+	
+	//Giving values to variables
+	todaysDate = new Date();
+	currYr = todaysDate.getFullYear();
+	currMon = todaysDate.getMonth() + 1; 
+	currDate = todaysDate.getDate();
+	
+	document.write("<p style = 'color: orange'>Today is " + currMon + "/" + currDate + "/" + currYr + ".</p>");
+
+	//Function prompting for user entry
+	function requestMonth() {
+		reqMon = Number((prompt("Please enter the number of the month (1 through 12) you want to display.")));
+
+	}
+
+	//Validating user input  
+	do{
+		requestMonth()
+	} 
+	
+	while(isNaN(reqMon) == true || reqMon < 1 || reqMon > 12);
+
+
+	//Giving values for variables used below (previously declared above)
+	firstDay = new Date(currYr, reqMon-1, 1);
+	firstDayofWeek = firstDay.getDay();
+	weekIncrement = 1;
+	dayIncrement = 1;
+	daysInMonth = new Date(currYr, reqMon, 0).getDate();
+
+	console.log(firstDay);
+
+	document.write("You entered the month of " + monthArray[reqMon-1] + ".<br />");
+
+	function weekNumber() {
+		document.write("<br /> Week " + (weekIncrement) + " of " + monthArray[firstDay.getMonth()] + "<br />");
+		weekIncrement++;
+
+	}
+
+	weekNumber();
+	
+	//Looping through the array for however number of days are in the month specified
+	for(var i=0; i < daysInMonth; i++) {
+
+		document.write(weekDaysArray[firstDayofWeek] + " " + (dayIncrement+i) + "<br />");
+		firstDayofWeek+=1;
+
+		if(firstDayofWeek == 7) {
+			weekNumber();
+			firstDayofWeek = 0;
+		} 
+		
+	}	
+
+	</script>
+
+</body>
+</html>
